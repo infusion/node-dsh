@@ -12,7 +12,7 @@
   "license": "MIT OR GPL-2.0",
   "repository": {
     "type": "git",
-    "url": "git://github.com/infusion/GPS.js.git"
+    "url": "git://github.com/infusion/dsh.git"
   },
   "engines": {
     "node": "*"
