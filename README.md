@@ -97,8 +97,11 @@ The file path to the history file. Default is null, which means no history file 
 
 'historyLimit'
 ---
-The maximum amount of lines getting written back to the history file. Default is null, which means everything is written
+The maximum number of lines getting written back to the history file. Default is null, which means everything is written
 
+'historyIgnoreDuplicate'
+---
+Boolean to ignore a command of being written to history twice, if the previous command was the same. Default is false, so every command is written to history
 
 Copyright and licensing
 ===

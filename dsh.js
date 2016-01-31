@@ -20,7 +20,8 @@
     'exitOnCtrlC': true,
     'abortOnCtrlC': false,
     'historyPath': null,
-    'historyLimit': null
+    'historyLimit': null,
+    'historyIgnoreDuplicate': false
   };
 
   var entered = "";
@@ -183,7 +184,8 @@
             self.emit('exec', entered);
 
             // Maintain history
-            if (entered !== "") {
+            if (entered !== "" && (!options.historyIgnoreDuplicate ||
+                    (0 === histndx || history[histndx - 1] !== entered))) {
               history.push(entered);
               histndx = history.length - 1;
             }
@@ -238,7 +240,7 @@
             var ndx = histndx + 1;
 
             if (ndx >= history.length) {
-              
+
               // Update the index
               histndx = history.length;
 
