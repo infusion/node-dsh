@@ -6,12 +6,26 @@ var shell = require('../dsh');
 // Add event listener for an command executed
 shell.on('exec', function(cmd) {
 
-  if (cmd.indexOf('open ') === 0) {
+  if (cmd.indexOf('surf ') === 0) {
     childProc.exec('open -a "Google Chrome" "' + cmd.slice(5) + '"', function() {
     });
   }
-  else if (cmd.indexOf('ps ') === 0) {
+  else if (cmd.indexOf('ps=') === 0) {
     this.setOptions('ps', cmd.slice(3));
+  }
+  else if (cmd === 'hist') {
+    this.write('The following commands were entered in the past:\n');
+    for (var i = 0; i < this.history.length; i++) {
+      this.write("  - " + this.history[i] + "\n");
+    }
+  }
+  else if (cmd === 'help') {
+    this.write('The following commands are available:\n');
+    this.write('   surf <url>       Opens a webpage using Google Chrome\n');
+    this.write('   ps=<string>      Sets the prompt string\n');
+    this.write('   hist             Shows the exec history\n');
+    this.write('   exit             Exits the shell\n');
+    this.write('   *                Is printed\n\n');
   }
   else if (cmd === 'quit' || cmd === 'exit') {
     this.exit();

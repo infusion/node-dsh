@@ -55,6 +55,13 @@ on(ev, fn)
 Sets the callback `fn` on event `ev` (see below for a full list of available events)
 
 
+Attributes
+===
+
+history
+---
+An array of commands, that were entered in the past
+
 Events
 ===
 open
