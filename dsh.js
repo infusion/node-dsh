@@ -23,7 +23,7 @@
     'historyLimit': null
   };
 
-  var cmd = "";
+  var entered = "";
   var histndx = 0;
   var history = [];
   var cursor = 0;
@@ -164,7 +164,7 @@
             cursor = 0;
 
             // Clear the current command
-            cmd = "";
+            entered = "";
 
             // Show prompt again
             self.write(options.ps);
@@ -180,18 +180,53 @@
             self.write("\n");
 
             // Get back to the user
-            self.emit('exec', cmd);
+            self.emit('exec', entered);
+
+            // Maintain history
+            if (entered !== "") {
+              history.push(entered);
+              histndx = history.length - 1;
+            }
 
             // Clear state
-            cmd = "";
+            entered = "";
             cursor = 0;
 
             // Show prompt again
             self.write(options.ps);
             return;
 
-
           case 'up':
+
+            if (lockedHistory) {
+              // It's still locked, because history file is still being read
+              alert();
+              return;
+            }
+
+            var ndx = histndx - 1;
+
+            if (ndx < 0) {
+              alert();
+            } else {
+
+              // Update the index
+              histndx = ndx;
+
+              // Set cursor on to line start
+              setCursor(-cursor);
+
+              // Write the history entry
+              self.write(history[ndx]);
+
+              // Delete everything behind the command
+              deleteRestOfLine();
+
+              // Adjust the cursor
+              cursor = history[ndx].length;
+            }
+            return;
+
           case 'down':
 
             if (lockedHistory) {
@@ -200,7 +235,42 @@
               return;
             }
 
+            var ndx = histndx + 1;
 
+            if (ndx >= history.length) {
+              
+              // Update the index
+              histndx = history.length;
+
+              // Set cursor on to line start
+              setCursor(-cursor);
+
+              // Get back to the command entered by the user
+              self.write(entered);
+
+              // Delete everything behind the command
+              deleteRestOfLine();
+
+              // Adjust the cursor
+              cursor = entered.length;
+
+            } else {
+
+              // Update the index
+              histndx = ndx;
+
+              // Set cursor on to line start
+              setCursor(-cursor);
+
+              // Write the history entry
+              self.write(history[ndx]);
+
+              // Delete everything behind the command
+              deleteRestOfLine();
+
+              // Adjust the cursor
+              cursor = history[ndx].length;
+            }
             return;
 
           case 'left':
@@ -219,7 +289,7 @@
 
             var col = cursor + 1;
 
-            if (col > cmd.length) {
+            if (col > entered.length) {
               alert();
             } else {
               cursor = col;
@@ -229,7 +299,7 @@
 
           case 'backspace':
 
-            if (cmd.length === 0) {
+            if (entered.length === 0) {
               alert();
               return;
             }
@@ -238,17 +308,17 @@
             setCursor(-1);
 
             // Write the rest of the line
-            self.write(cmd.slice(cursor));
+            self.write(entered.slice(cursor));
 
             // Clear the remaining char on the right
             deleteRestOfLine();
 
             // Set cursor back to the right place
-            setCursor(cursor - cmd.length);
+            setCursor(cursor - entered.length);
 
             // Maintain internal state
             cursor--;
-            cmd = cmd.slice(0, cursor) + cmd.slice(cursor + 1);
+            entered = entered.slice(0, cursor) + entered.slice(cursor + 1);
             return;
 
           case 'escape':
@@ -261,13 +331,13 @@
       self.write(ch);
 
       // Write the rest of the line if we're in the middle of a command
-      if (cursor < cmd.length) {
-        self.write(cmd.slice(cursor));
-        setCursor(cursor - cmd.length);
+      if (cursor < entered.length) {
+        self.write(entered.slice(cursor));
+        setCursor(cursor - entered.length);
       }
 
       // Add char to the command
-      cmd = cmd.slice(0, cursor) + ch + cmd.slice(cursor);
+      entered = entered.slice(0, cursor) + ch + entered.slice(cursor);
 
       // Move cursor
       cursor += ch.length;
