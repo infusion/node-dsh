@@ -187,7 +187,7 @@
             if (entered !== "" && (!options.historyIgnoreDuplicate ||
                     (0 === histndx || history[histndx - 1] !== entered))) {
               history.push(entered);
-              histndx = history.length - 1;
+              histndx = history.length;
             }
 
             // Clear state

@@ -75,31 +75,31 @@ exec
 Options
 ===
 
-'ps'
+ps
 ---
 The prompt string, which gets prepended of each line. Default is `'>> '`
 
-'useAlert'
+useAlert
 ---
 Boolean to notify the user of small interaction mistakes by playing the typical beep sound. Default is true.
 
-'exitOnCtrlC'
+exitOnCtrlC
 ---
 Boolean if the shell should exit when ctrl-c is invoked. Default is true. Alternative would be to call `exit()` on your own.
 
-'abortOnCtrlC'
+abortOnCtrlC
 ---
 If `exitOnCtrlC` is false, then ctrl-c can be used to abort the actual writing of a command.
 
-'historyPath'
+historyPath
 ---
 The file path to the history file. Default is null, which means no history file is written
 
-'historyLimit'
+historyLimit
 ---
 The maximum number of lines getting written back to the history file. Default is null, which means everything is written
 
-'historyIgnoreDuplicate'
+historyIgnoreDuplicate
 ---
 Boolean to ignore a command of being written to history twice, if the previous command was the same. Default is false, so every command is written to history
 
