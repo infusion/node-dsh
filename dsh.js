@@ -24,7 +24,7 @@
     'historyIgnoreDuplicate': false
   };
 
-  var entered = "";
+  var entered = '';
   var histndx = 0;
   var history = [];
   var cursor = 0;
@@ -39,7 +39,7 @@
       try {
         fd = fs.openSync(options.historyPath, 'w+');
       } catch (e) {
-        process.stdout.write("\n\033[0;31mCan't write history file " + options.historyPath + "\033[0m");
+        process.stdout.write('\n\033[0;31mCan\'t write history file ' + options.historyPath + '\033[0m');
         return;
       }
 
@@ -49,7 +49,7 @@
 
       for (; i < history.length; i++) {
 
-        fs.writeSync(fd, history[i] + "\n");
+        fs.writeSync(fd, history[i] + '\n');
       }
       fs.closeSync(fd);
     }
@@ -92,9 +92,9 @@
     if (num === 0) {
 
     } else if (num < 0) {
-      process.stdout.write("\033[" + (-num) + "D");
+      process.stdout.write('\033[' + (-num) + 'D');
     } else {
-      process.stdout.write("\033[" + num + "C");
+      process.stdout.write('\033[' + num + 'C');
     }
   }
 
@@ -159,13 +159,13 @@
           } else if (options.abortOnCtrlC) {
 
             // Write a new line
-            self.write("\n");
+            self.write('\n');
 
             // Set the cursor to the beginning
             cursor = 0;
 
             // Clear the current command
-            entered = "";
+            entered = '';
 
             // Show prompt again
             self.write(options.ps);
@@ -178,20 +178,20 @@
           case 'return':
 
             // Go to the next line
-            self.write("\n");
+            self.write('\n');
 
             // Get back to the user
             self.emit('exec', entered);
 
             // Maintain history
-            if (entered !== "" && (!options.historyIgnoreDuplicate ||
+            if (entered !== '' && (!options.historyIgnoreDuplicate ||
                     (0 === histndx || history[histndx - 1] !== entered))) {
               history.push(entered);
               histndx = history.length;
             }
 
             // Clear state
-            entered = "";
+            entered = '';
             cursor = 0;
 
             // Show prompt again

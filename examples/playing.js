@@ -1,5 +1,4 @@
 
-
 var childProc = require('child_process');
 var shell = require('../dsh');
 
@@ -50,7 +49,8 @@ shell.on('exit', function() {
 shell.setOptions({
   ps: '$ ',
   historyPath: '/home/.dsh_history',
-  exitOnCtrlC: true
+  exitOnCtrlC: false,
+  abortOnCtrlC: true
 });
 
 // Start the shell
