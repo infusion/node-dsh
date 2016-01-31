@@ -20,5 +20,9 @@
   "dependencies": {
     "keypress": "*",
     "line-by-line": "*"
+  },
+  "devDependencies": {
+      "gps.js": "*",
+      "serialport": "*"
   }
 }

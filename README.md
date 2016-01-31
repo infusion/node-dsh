@@ -62,6 +62,10 @@ history
 ---
 An array of commands, that were entered in the past
 
+running
+---
+A boolean flag if a long running task is still allowed to run. See gps example in the examples folder.
+
 Events
 ===
 open

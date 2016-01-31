@@ -150,6 +150,9 @@
 
     process.stdin.on('keypress', function(ch, key) {
 
+      // Undo the running constraint
+      self.running = true;
+
       if (key) {
 
         if (key.ctrl && key.name === 'c') {
@@ -157,6 +160,9 @@
           if (options.exitOnCtrlC) {
             self.exit();
           } else if (options.abortOnCtrlC) {
+
+            // Abort a long running task
+            self.running = false;
 
             // Write a new line
             self.write('\n');
@@ -359,6 +365,8 @@
   };
 
   DSH.prototype.history = history;
+
+  DSH.prototype.running = true;
 
   module.exports = new DSH;
 
