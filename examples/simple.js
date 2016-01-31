@@ -17,7 +17,7 @@ shell.on('exit', function() {
 // Set some options
 shell.setOptions({
   ps: '>> ',
-  history: '~/.dsh_history'
+  historyPath: '/home/.dsh_history'
 });
 
 // Start the shell

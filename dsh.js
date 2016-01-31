@@ -10,39 +10,78 @@
   var fs = require('fs');
   var EventEmitter = require('events');
   var util = require('util');
+  var LineByLineReader = require('line-by-line');
 
   require('keypress')(process.stdin);
 
   var options = {
     'ps': '>> ',
-    'playBell': true,
-    'exitOnCtrlC': false,
-    'newlineOnCtrlC': true,
-    'history': null
+    'useAlert': true,
+    'exitOnCtrlC': true,
+    'abortOnCtrlC': false,
+    'historyPath': null,
+    'historyLimit': null
   };
 
   var cmd = "";
   var histndx = 0;
   var history = [];
   var cursor = 0;
+  var lockedHistory = true;
 
   function writeHistory() {
 
-    if (options.history) {
+    var fd, i = 0;
 
+    if (options.historyPath && history.length > 0) {
+
+      try {
+        fd = fs.openSync(options.historyPath, 'w+');
+      } catch (e) {
+        process.stdout.write("\n\033[0;31mCan't write history file " + options.historyPath + "\033[0m");
+        return;
+      }
+
+      if (options.historyLimit !== null) {
+        i = Math.max(0, history.length - options.historyLimit);
+      }
+
+      for (; i < history.length; i++) {
+
+        fs.writeSync(fd, history[i] + "\n");
+      }
+      fs.closeSync(fd);
     }
   }
 
   function readHistory() {
 
-    if (options.history) {
-      console.log("Read " + options.history);
+    if (options.historyPath) {
+
+      // Read async to speed up the startup
+      var lr = new LineByLineReader(options.historyPath);
+
+      lr.on('error', function() {
+        lockedHistory = false;
+      });
+
+      lr.on('end', function() {
+        lockedHistory = false;
+      });
+
+      lr.on('line', function(line) {
+        history.push(line);
+        histndx++;
+      });
+
+    } else {
+      lockedHistory = false;
     }
   }
 
-  function bell() {
+  function alert() {
 
-    if (options.playBell) {
+    if (options.useAlert) {
       process.stdout.write('\x07');
     }
   }
@@ -54,7 +93,7 @@
     } else if (num < 0) {
       process.stdout.write("\033[" + (-num) + "D");
     } else {
-      process.stdout.write("\033[" + (-num) + "C");
+      process.stdout.write("\033[" + num + "C");
     }
   }
 
@@ -116,7 +155,7 @@
 
           if (options.exitOnCtrlC) {
             self.exit();
-          } else if (options.newlineOnCtrlC) {
+          } else if (options.abortOnCtrlC) {
 
             // Write a new line
             self.write("\n");
@@ -154,6 +193,14 @@
 
           case 'up':
           case 'down':
+
+            if (lockedHistory) {
+              // It's still locked, because history file is still being read
+              alert();
+              return;
+            }
+
+
             return;
 
           case 'left':
@@ -161,7 +208,7 @@
             var col = cursor - 1;
 
             if (col < 0) {
-              bell();
+              alert();
             } else {
               cursor = col;
               setCursor(-1);
@@ -173,7 +220,7 @@
             var col = cursor + 1;
 
             if (col > cmd.length) {
-              bell();
+              alert();
             } else {
               cursor = col;
               setCursor(+1);
@@ -183,7 +230,7 @@
           case 'backspace':
 
             if (cmd.length === 0) {
-              bell();
+              alert();
               return;
             }
 
