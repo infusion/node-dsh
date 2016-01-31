@@ -1,0 +1,23 @@
+{
+  "name": "dsh",
+  "title": "dsh",
+  "version": "1.0.0",
+  "homepage": "https://github.com/infusion/dsh",
+  "bugs": "https://github.com/infusion/dsh/issues",
+  "description": "A shell written in JavaScript",
+  "keywords": ["shell", "terminal"],
+  "author": "Robert Eisele <robert@xarg.org> (http://www.xarg.org/)",
+  "main": "dsh",
+  "readmeFilename": "README.md",
+  "license": "MIT OR GPL-2.0",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/infusion/GPS.js.git"
+  },
+  "engines": {
+    "node": "*"
+  },
+  "dependencies": {
+    "keypress": "*"
+  }
+}
