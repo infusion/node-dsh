@@ -15,14 +15,14 @@
   require('keypress')(process.stdin);
 
   var options = {
-    'ps': '>> ',
-    'useAlert': true,
-    'exitOnCtrlC': true,
-    'abortOnCtrlC': false,
-    'historyPath': null,
-    'historyLimit': null,
+    'ps'                    : '>> ',
+    'useAlert'              : true,
+    'exitOnCtrlC'           : true,
+    'abortOnCtrlC'          : false,
+    'historyPath'           : null,
+    'historyLimit'          : null,
     'historyIgnoreDuplicate': false,
-    'async': false
+    'async'                 : false
   };
 
   // A backup of the edited command line

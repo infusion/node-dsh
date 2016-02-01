@@ -2,8 +2,8 @@
   "name": "dsh",
   "title": "dsh",
   "version": "1.0.0",
-  "homepage": "https://github.com/infusion/dsh",
-  "bugs": "https://github.com/infusion/dsh/issues",
+  "homepage": "https://github.com/infusion/node-dsh",
+  "bugs": "https://github.com/infusion/node-dsh/issues",
   "description": "A shell written in JavaScript",
   "keywords": ["shell", "terminal", "cli", "console"],
   "author": "Robert Eisele <robert@xarg.org> (http://www.xarg.org/)",
@@ -12,7 +12,7 @@
   "license": "MIT OR GPL-2.0",
   "repository": {
     "type": "git",
-    "url": "git://github.com/infusion/dsh.git"
+    "url": "git://github.com/infusion/node-dsh.git"
   },
   "engines": {
     "node": "*"
