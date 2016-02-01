@@ -87,6 +87,10 @@ The event is triggered when the user hits ctrl+<key> (key is any a-z without c f
 Options
 ===
 
+async
+---
+Boolean if the exec event should be asynchronous. If it is, the callback has a second argument, the `done()` callback. See the MySQL client in the examples folder.
+
 ps
 ---
 The prompt string, which gets prepended of each line. Default is `'>> '`

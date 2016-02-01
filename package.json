@@ -5,7 +5,7 @@
   "homepage": "https://github.com/infusion/dsh",
   "bugs": "https://github.com/infusion/dsh/issues",
   "description": "A shell written in JavaScript",
-  "keywords": ["shell", "terminal"],
+  "keywords": ["shell", "terminal", "cli", "console"],
   "author": "Robert Eisele <robert@xarg.org> (http://www.xarg.org/)",
   "main": "dsh",
   "readmeFilename": "README.md",
@@ -23,6 +23,7 @@
   },
   "devDependencies": {
       "gps.js": "*",
-      "serialport": "*"
+      "serialport": "*",
+      "mysql": "*"
   }
 }

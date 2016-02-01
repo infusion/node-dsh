@@ -22,7 +22,8 @@
     'historyPath': null,
     'historyLimit': null,
     'historyIgnoreDuplicate': false,
-    'historyFilter': false
+    'historyFilter': false,
+    'async': false
   };
 
   var edited = '';
@@ -182,7 +183,7 @@
             }
             return;
           }
-          
+
           if (key.name.length === 1) {
             self.emit('control', key.name);
             return;
@@ -196,8 +197,16 @@
             // Go to the next line
             self.write('\n');
 
-            // Get back to the user
-            self.emit('exec', entered);
+            if (options.async) {
+              // Get back to the user
+              self.emit('exec', entered, function() {
+                // Show prompt again
+                self.write(options.ps);
+              });
+            } else {
+              // Get back to the user
+              self.emit('exec', entered);
+            }
 
             // Maintain history
             if (entered !== '' && (!options.historyIgnoreDuplicate ||
@@ -211,8 +220,10 @@
             entered = '';
             edited = '';
 
-            // Show prompt again
-            self.write(options.ps);
+            if (!options.async) {
+              // Show prompt again
+              self.write(options.ps);
+            }
             return;
 
           case 'up':
