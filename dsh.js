@@ -86,6 +86,10 @@
       });
 
       lr.on('end', function() {
+
+        if (options.historyLimit !== null) {
+          history = history.slice(-options.historyLimit);
+        }
         lockedHistory = false;
       });
 
