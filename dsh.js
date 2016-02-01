@@ -338,7 +338,7 @@
 
           case 'backspace':
 
-            if (cmd.length === 0) {
+            if (cursor === 0) {
               alert();
               return;
             }
