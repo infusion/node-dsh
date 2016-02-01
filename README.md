@@ -119,10 +119,6 @@ historyIgnoreDuplicate
 ---
 Boolean to ignore a command of being written to history twice, if the previous command was the same. Default is false, so every command is written to history
 
-historyFilter
----
-If history filters are active, the user can browse through the history more easily by typing in the first few characters of a command
-
 Copyright and licensing
 ===
 Copyright (c) 2016, Robert Eisele (robert@xarg.org)

@@ -22,7 +22,6 @@
     'historyPath': null,
     'historyLimit': null,
     'historyIgnoreDuplicate': false,
-    'historyFilter': false,
     'async': false
   };
 
