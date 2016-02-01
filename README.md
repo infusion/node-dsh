@@ -44,6 +44,15 @@ Features
 - No pre-set parser, full control of the input
 - Small codebase, easy extensible
 
+
+Installation
+===
+Installing DSH is as easy as cloning this repo or use the following command:
+
+```
+npm install dsh
+```
+
 Methods
 ===
 
@@ -127,14 +136,6 @@ The maximum number of lines getting written back to the history file. Default is
 historyIgnoreDuplicate
 ---
 Boolean to ignore a command of being written to history twice, if the previous command was the same. Default is false, so every command is written to history
-
-Installation
-===
-Installing DSH is as easy as cloning this repo or use the following command:
-
-```
-npm install dsh
-```
 
 Copyright and licensing
 ===
