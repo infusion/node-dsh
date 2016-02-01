@@ -1,5 +1,5 @@
 /**
- * DSH v1.0.0 01/02/2016
+ * DSH v1.0.1 01/02/2016
  *
  * Copyright (c) 2016, Robert Eisele (robert@xarg.org)
  * Dual licensed under the MIT or GPL Version 2 licenses.

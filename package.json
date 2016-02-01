@@ -1,7 +1,7 @@
 {
   "name": "dsh",
   "title": "dsh",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "homepage": "https://github.com/infusion/node-dsh",
   "bugs": "https://github.com/infusion/node-dsh/issues",
   "description": "A shell written in JavaScript",

@@ -3,17 +3,18 @@
 [![NPM Package](https://img.shields.io/npm/v/dsh.svg?style=flat)](https://npmjs.org/package/dsh "View this project on npm")
 [![MIT license](http://img.shields.io/badge/license-MIT-brightgreen.svg)](http://opensource.org/licenses/MIT)
 
-DSH - pronounced as dash - is a full featured shell written in JavaScript. It handles the whole user interaction and you can focus on working with the requested command with your parser.
+DSH - pronounced dash - is a full featured shell written in JavaScript, which gives you endless possibilities of transforming your app into a shell application. It handles the whole user interaction and you can focus on working with the requested command with your parser.
 
 Usage
 ===
+The terminal window shown above can be implemented with the following snippet:
 
 ```javascript
 var shell = require('dsh');
 
 // Add event listener for an command executed
 shell.on('exec', function(cmd) {
-   console.log('Coammand: ', cmd);
+   console.log('Command:', cmd);
 });
 
 // Say something
@@ -28,12 +29,20 @@ shell.on('exit', function() {
 // Set some options
 shell.setOptions({
   ps: '$ ',
-  history: '~/.dsh_history'
+  history: '/home/.dsh_history'
 });
 
 // Start the shell
 shell.open();
 ```
+
+Features
+===
+
+- Configurable History
+- Asynchronous execution
+- No pre-set parser, full control of the input
+- Small codebase, easy extensible
 
 Methods
 ===
