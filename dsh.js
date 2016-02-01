@@ -1,5 +1,5 @@
 /**
- * DSH v1.0.0 31/01/2016
+ * DSH v1.0.0 01/02/2016
  *
  * Copyright (c) 2016, Robert Eisele (robert@xarg.org)
  * Dual licensed under the MIT or GPL Version 2 licenses.
@@ -26,12 +26,27 @@
     'async': false
   };
 
+  // A backup of the edited command line
   var edited = '';
+  
+  // The entered command
   var entered = '';
+  
+  // The current index in the history array
   var histndx = 0;
+  
+  // The history
   var history = [];
+  
+  // The actual cursor position
   var cursor = 0;
+  
+  // Whether the history browsing is locked. This is only at startup time, when the user tries
+  // to browse the history before the data from the history file read
   var lockedHistory = true;
+  
+  // Whether the input is locked. This happens when the user decides to use async 
+  // exec events. As long as the done() callback isn't invoked, the shell is unable to receive new commands
   var lockedInput = false;
 
   function writeHistory() {
@@ -190,6 +205,7 @@
             return;
           }
 
+          // If it is another control request, emit the event
           if (key.name.length === 1) {
             self.emit('control', key.name);
             return;
