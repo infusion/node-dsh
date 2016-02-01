@@ -28,23 +28,23 @@
 
   // A backup of the edited command line
   var edited = '';
-  
+
   // The entered command
   var entered = '';
-  
+
   // The current index in the history array
   var histndx = 0;
-  
+
   // The history
   var history = [];
-  
+
   // The actual cursor position
   var cursor = 0;
-  
+
   // Whether the history browsing is locked. This is only at startup time, when the user tries
   // to browse the history before the data from the history file read
   var lockedHistory = true;
-  
+
   // Whether the input is locked. This happens when the user decides to use async 
   // exec events. As long as the done() callback isn't invoked, the shell is unable to receive new commands
   var lockedInput = false;
@@ -169,6 +169,8 @@
 
     process.stdin.on('keypress', function(ch, key) {
 
+      var ndx;
+
       if (lockedInput) {
         // An async process is still running
         return;
@@ -218,7 +220,7 @@
 
             // Go to the next line
             self.write('\n');
-            
+
             // Lock the input if it's async
             lockedInput = options.async;
 
@@ -227,7 +229,7 @@
               self.emit('exec', entered, function() {
                 // Show prompt again
                 self.write(options.ps);
-                
+
                 // Release lock
                 lockedInput = false;
               });
@@ -255,6 +257,7 @@
             return;
 
           case 'up':
+          case 'down':
 
             if (lockedHistory) {
               // It's still locked, because history file is still being read
@@ -262,14 +265,36 @@
               return;
             }
 
-            var ndx = histndx - 1;
+            if (key.name === 'up') {
+              ndx = histndx - 1;
+            } else {
+              ndx = histndx + 1;
+            }
 
-            if (ndx < 0) {
+            if (ndx >= history.length) {
+
+              // Update the index
+              histndx = history.length;
+
+              // Set cursor on to line start
+              setCursor(-cursor);
+
+              // Get back to the command entered by the user
+              self.write(edited);
+              entered = edited;
+
+              // Delete everything behind the command
+              deleteRestOfLine();
+
+              // Adjust the cursor
+              cursor = edited.length;
+
+            } else if (ndx < 0) {
               alert();
             } else {
 
-              // Save the current input line
-              if (ndx + 1 === history.length) {
+              // Save the current input line when going up the first time
+              if (key.name === 'up' && ndx + 1 === history.length) {
                 edited = entered;
               }
 
@@ -291,75 +316,20 @@
             }
             return;
 
-          case 'down':
-
-            if (lockedHistory) {
-              // It's still locked, because history file is still being read
-              alert();
-              return;
-            }
-
-            var ndx = histndx + 1;
-
-            if (ndx >= history.length) {
-
-              // Update the index
-              histndx = history.length;
-
-              // Set cursor on to line start
-              setCursor(-cursor);
-
-              // Get back to the command entered by the user
-              self.write(edited);
-              entered = edited;
-
-              // Delete everything behind the command
-              deleteRestOfLine();
-
-              // Adjust the cursor
-              cursor = edited.length;
-
-            } else {
-
-              // Update the index
-              histndx = ndx;
-
-              // Set cursor on to line start
-              setCursor(-cursor);
-
-              // Write the history entry
-              self.write(history[ndx]);
-              entered = history[ndx];
-
-              // Delete everything behind the command
-              deleteRestOfLine();
-
-              // Adjust the cursor
-              cursor = history[ndx].length;
-            }
-            return;
-
           case 'left':
-
-            var col = cursor - 1;
-
-            if (col < 0) {
-              alert();
-            } else {
-              cursor = col;
-              setCursor(-1);
-            }
-            return;
-
           case 'right':
 
-            var col = cursor + 1;
+            if (key.name === 'left') {
+              ndx = cursor - 1;
+            } else {
+              ndx = cursor + 1;
+            }
 
-            if (col > entered.length) {
+            if (ndx < 0 || ndx > entered.length) {
               alert();
             } else {
-              cursor = col;
-              setCursor(+1);
+              setCursor(ndx - cursor);
+              cursor = ndx;
             }
             return;
 
