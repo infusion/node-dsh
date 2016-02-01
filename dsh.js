@@ -21,9 +21,11 @@
     'abortOnCtrlC': false,
     'historyPath': null,
     'historyLimit': null,
-    'historyIgnoreDuplicate': false
+    'historyIgnoreDuplicate': false,
+    'historyFilter': false
   };
 
+  var edited = '';
   var entered = '';
   var histndx = 0;
   var history = [];
@@ -155,28 +157,31 @@
 
       if (key) {
 
-        if (key.ctrl && key.name === 'c') {
+        if (key.ctrl) {
 
-          if (options.exitOnCtrlC) {
-            self.exit();
-          } else if (options.abortOnCtrlC) {
+          if (key.name === 'c') {
 
-            // Abort a long running task
-            self.running = false;
+            if (options.exitOnCtrlC) {
+              self.exit();
+            } else if (options.abortOnCtrlC) {
 
-            // Write a new line
-            self.write('\n');
+              // Abort a long running task
+              self.running = false;
 
-            // Set the cursor to the beginning
-            cursor = 0;
+              // Write a new line
+              self.write('\n');
 
-            // Clear the current command
-            entered = '';
+              // Set the cursor to the beginning
+              cursor = 0;
 
-            // Show prompt again
-            self.write(options.ps);
+              // Clear the current command
+              entered = '';
+
+              // Show prompt again
+              self.write(options.ps);
+            }
+            return;
           }
-          return;
         }
 
         switch (key.name) {
@@ -197,8 +202,9 @@
             }
 
             // Clear state
-            entered = '';
             cursor = 0;
+            entered = '';
+            edited = '';
 
             // Show prompt again
             self.write(options.ps);
@@ -218,6 +224,11 @@
               alert();
             } else {
 
+              // Save the current input line
+              if (ndx + 1 === history.length) {
+                edited = entered;
+              }
+
               // Update the index
               histndx = ndx;
 
@@ -226,6 +237,7 @@
 
               // Write the history entry
               self.write(history[ndx]);
+              entered = history[ndx];
 
               // Delete everything behind the command
               deleteRestOfLine();
@@ -254,13 +266,14 @@
               setCursor(-cursor);
 
               // Get back to the command entered by the user
-              self.write(entered);
+              self.write(edited);
+              entered = edited;
 
               // Delete everything behind the command
               deleteRestOfLine();
 
               // Adjust the cursor
-              cursor = entered.length;
+              cursor = edited.length;
 
             } else {
 
@@ -272,6 +285,7 @@
 
               // Write the history entry
               self.write(history[ndx]);
+              entered = history[ndx];
 
               // Delete everything behind the command
               deleteRestOfLine();
@@ -346,6 +360,7 @@
 
       // Add char to the command
       entered = entered.slice(0, cursor) + ch + entered.slice(cursor);
+      edited = entered;
 
       // Move cursor
       cursor += ch.length;
