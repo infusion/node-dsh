@@ -70,11 +70,19 @@ Events
 ===
 open
 ---
+The event is triggered when the shell is opened. This is the right place for your message of the day.
+
 exit
 ---
+The event is triggered before the program is getting terminated.
+
 exec
 ---
+The event is triggered for every command submitted. The callback has one parameter, the command itself.
 
+control
+---
+The event is triggered when the user hits ctrl+<key> (key is any a-z without c for the moment). The callback has one parameter, the key.
 
 Options
 ===
@@ -106,6 +114,10 @@ The maximum number of lines getting written back to the history file. Default is
 historyIgnoreDuplicate
 ---
 Boolean to ignore a command of being written to history twice, if the previous command was the same. Default is false, so every command is written to history
+
+historyFilter
+---
+If history filters are active, the user can browse through the history more easily by typing in the first few characters of a command
 
 Copyright and licensing
 ===

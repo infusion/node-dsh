@@ -41,6 +41,12 @@ shell.on('open', function() {
   this.write("Welcome, it is " + new Date() + "\n");
 });
 
+// Try pressing Ctrl+a (everthing besides Ctrl+c)
+shell.on('control', function(key) {
+
+  this.write("Control+" + key);
+});
+
 shell.on('exit', function() {
   this.write("See you...\n");
 });

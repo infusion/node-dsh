@@ -182,6 +182,11 @@
             }
             return;
           }
+          
+          if (key.name.length === 1) {
+            self.emit('control', key.name);
+            return;
+          }
         }
 
         switch (key.name) {
