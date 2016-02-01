@@ -1,4 +1,4 @@
-![DSH](https://github.com/infusion/dsh/blob/master/logo.png?raw=true "Javascript Shell")
+![DSH](https://github.com/infusion/node-dsh/blob/master/logo.png?raw=true "Javascript Shell")
 
 [![NPM Package](https://img.shields.io/npm/v/dsh.svg?style=flat)](https://npmjs.org/package/dsh "View this project on npm")
 [![MIT license](http://img.shields.io/badge/license-MIT-brightgreen.svg)](http://opensource.org/licenses/MIT)
