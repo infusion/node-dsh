@@ -32,6 +32,7 @@
   var history = [];
   var cursor = 0;
   var lockedHistory = true;
+  var lockedInput = false;
 
   function writeHistory() {
 
@@ -153,6 +154,11 @@
 
     process.stdin.on('keypress', function(ch, key) {
 
+      if (lockedInput) {
+        // An async process is still running
+        return;
+      }
+
       // Undo the running constraint
       self.running = true;
 
@@ -196,12 +202,18 @@
 
             // Go to the next line
             self.write('\n');
+            
+            // Lock the input if it's async
+            lockedInput = options.async;
 
             if (options.async) {
               // Get back to the user
               self.emit('exec', entered, function() {
                 // Show prompt again
                 self.write(options.ps);
+                
+                // Release lock
+                lockedInput = false;
               });
             } else {
               // Get back to the user
