@@ -50,7 +50,7 @@ Installation
 Installing DSH is as easy as cloning this repo or use the following command:
 
 ```
-npm install dsh
+npm install --save dsh
 ```
 
 Methods
