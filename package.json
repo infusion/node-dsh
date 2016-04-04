@@ -8,6 +8,7 @@
   "keywords": ["shell", "terminal", "cli", "console"],
   "author": "Robert Eisele <robert@xarg.org> (http://www.xarg.org/)",
   "main": "dsh",
+  "private": false,
   "readmeFilename": "README.md",
   "license": "MIT OR GPL-2.0",
   "repository": {
