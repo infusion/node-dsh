@@ -139,5 +139,5 @@ Boolean to ignore a command of being written to history twice, if the previous c
 
 Copyright and licensing
 ===
-Copyright (c) 2016, Robert Eisele (robert@xarg.org)
+Copyright (c) 2016, [Robert Eisele](http://www.xarg.org/)
 Dual licensed under the MIT or GPL Version 2 licenses.
